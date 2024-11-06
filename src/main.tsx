@@ -5,6 +5,7 @@ import './index.css';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import App from './App';
+import { Toaster } from './components/ui/toaster';
 
 const container = document.getElementById('root');
 
@@ -18,6 +19,7 @@ root.render(
   <Provider store={store}>
     <ChakraProvider value={defaultSystem}>
       <App />
+      <Toaster />
     </ChakraProvider>
   </Provider>,
 );
