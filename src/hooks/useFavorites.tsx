@@ -16,8 +16,8 @@ export const useFavorites = (launch: ILaunch) => {
       toaster.create({
         title: "Launch removed from favorites",
         description: `${launch.name} was successfully removed.`,
-        type: "warning", // Set the toast type (success, error, warning, info)
-        duration: 3000, // Toast duration in milliseconds
+        type: "warning",
+        duration: 3000,
       });
     } else {
       dispatch(addFavorite(launch));
@@ -25,7 +25,7 @@ export const useFavorites = (launch: ILaunch) => {
       toaster.create({
         title: "Launch added to favorites",
         description: `${launch.name} was successfully added.`,
-        type: "success", // Set the toast type
+        type: "success",
         duration: 3000,
       });
     }

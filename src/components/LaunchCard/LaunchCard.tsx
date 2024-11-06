@@ -1,4 +1,3 @@
-// src/components/LaunchCard.tsx
 import { Box, Image, Badge, Heading, Text, Stack, Flex, IconButton, Spacer } from '@chakra-ui/react';
 import React from 'react';
 import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
@@ -28,26 +27,25 @@ const LaunchCard: React.FC<LaunchCardProps> = (launch) => {
   return (
     <Box
       maxW="sm"
-      borderWidth="0"  // Remove the border
+      borderWidth="0"
       borderRadius="lg"
       overflow="hidden"
-      bg="rgba(0, 0, 0, 0.2)" // RGBA background
+      bg="rgba(0, 0, 0, 0.2)"
       boxShadow="lg"
       color="white"
       _hover={{ boxShadow: "xl", transform: "scale(1.03)" }}
       transition="all 0.2s"
     >
       <Box p={4}>
-        {/* Image and Title Row */}
         <Flex alignItems="center" mb={4}>
           <Image
             src={imageUrl || DEFAULT_LAUNCH_IMAGE}
             alt={name}
-            borderRadius="full"       // Make the image circular
+            borderRadius="full"
             objectFit="cover"
-            w="50px"                  // Adjust size to fit as a small circular image
+            w="50px"
             h="50px"
-            mr={4}                    // Add margin to separate image and heading
+            mr={4}
           />
           <Heading size="md">{name}</Heading>
           <Spacer />
@@ -61,14 +59,10 @@ const LaunchCard: React.FC<LaunchCardProps> = (launch) => {
             {isFavorite ? <FaBookmark /> : <FaRegBookmark />}
           </IconButton>
         </Flex>
-
-        {/* Date and Location */}
         <Stack gap={2}>
           <Text fontSize="sm">Date: {new Date(date).toLocaleDateString()}</Text>
           <Text fontSize="sm">Location: {location}</Text>
         </Stack>
-
-        {/* Status Badge */}
         <Badge
           mt={4}
           colorScheme={success === true ? "green" : success === false ? "red" : "yellow"}
