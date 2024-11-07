@@ -14,6 +14,9 @@ export const spaceXApi = createApi({
     }),
     getLaunchpadById: builder.query({
       query: (id) => `api/launches/${id}`,
+    }),
+    fetchRecentTweets: builder.query<TweetsResponse, void>({
+      query: () => 'api/tweets',
     })
   }),
 });
@@ -21,5 +24,6 @@ export const spaceXApi = createApi({
 export const {
   useGetUpcomingLaunchesQuery,
   useGetPastLaunchesQuery,
-  useGetLaunchpadByIdQuery
+  useGetLaunchpadByIdQuery,
+  useFetchRecentTweetsQuery
 } = spaceXApi;
