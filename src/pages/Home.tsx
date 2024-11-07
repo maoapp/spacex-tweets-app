@@ -3,9 +3,10 @@ import { Flex, Box, Heading, Text, VStack } from '@chakra-ui/react';
 import TwitterFeed from '../components/TwitterFeed/TwitterFeed';
 import Spinner from '../components/Spinner/Spinner';
 import { useFetchRecentTweetsQuery } from '../services/spaceXApi';
+import ErrorMessage from '../components/ErrorMessage/ErrorMessage';
 
 const Home: React.FC = () => {
-  const { data: tweets, isLoading } = useFetchRecentTweetsQuery();
+  const { data: tweets, isLoading, isError, refetch } = useFetchRecentTweetsQuery();
 
   if (isLoading) {
     return (
@@ -37,11 +38,13 @@ const Home: React.FC = () => {
           Embark on a journey to explore the cosmos together. Track upcoming launches, revisit past missions, 
           and stay up-to-date with the latest in space exploration. Together, let's push the boundaries of what's possible.
         </Text>
+        <Heading>Tweets</Heading>
         {tweets && (
           <Box w="300px" mt={10} display={{ base: 'none', lg: 'block' }}>
             <TwitterFeed tweets={tweets} />
           </Box>
         )}
+        {isError && <ErrorMessage message="its not possible to show tweets at this moment :("  onRetry={refetch} />}
       </VStack>
 
     </Flex>
