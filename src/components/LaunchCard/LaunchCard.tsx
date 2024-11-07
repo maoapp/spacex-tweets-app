@@ -1,78 +1,119 @@
-import { Box, Image, Badge, Heading, Text, Stack, Flex, IconButton, Spacer } from '@chakra-ui/react';
+import { Box, Image, Badge, Heading, Text, Flex, IconButton } from '@chakra-ui/react';
 import React from 'react';
 import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
 import { DEFAULT_LAUNCH_IMAGE } from '../../constants';
-import { useFavorites } from '../../hooks/useFavorites';
+import { ILaunch } from '../../types';
 
 interface LaunchCardProps {
-  key: string;
-  id: string;
-  name: string;
-  date: string;
-  location: string;
-  success: boolean | null;
-  imageUrl?: string;
+  launch: ILaunch;
+  handleDetailsClick?: () => void;
+  toggleFavorite: (launch: ILaunch) => void; // New prop for toggling favorites
 }
 
-const LaunchCard: React.FC<LaunchCardProps> = (launch) => {
-  const { isFavorite, toggleFavorite } = useFavorites(launch);
+const LaunchCard: React.FC<LaunchCardProps> = ({ launch, handleDetailsClick, toggleFavorite }) => {
   const {
     name,
-    date,
-    location,
+    date_utc,
     success,
-    imageUrl
+    links,
   } = launch;
 
   return (
     <Box
-      maxW="sm"
-      borderWidth="0"
+      maxW="320px"
+      borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      bg="rgba(0, 0, 0, 0.2)"
+      bg="rgba(255, 255, 255, 0.05)"
+      borderColor="rgba(255, 255, 255, 0.1)"
       boxShadow="lg"
       color="white"
-      _hover={{ boxShadow: "xl", transform: "scale(1.03)" }}
-      transition="all 0.2s"
+      transition="all 0.3s ease-in-out"
+      _hover={{
+        transform: "scale(1.05)",
+        boxShadow: "xl",
+        borderColor: "rgba(255, 255, 255, 0.4)",
+      }}
     >
+      <Box
+        position="relative"
+        _hover={{
+          "&::after": {
+            opacity: 0.3
+          },
+        }}
+      >
+        <Image
+          src={links?.patch?.small || DEFAULT_LAUNCH_IMAGE}
+          alt={name}
+          objectFit="cover"
+          opacity={0.6}
+          w="100%"
+          h="150px"
+          transition="opacity 0.3s ease-in-out"
+        />
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          w="100%"
+          h="100%"
+          bg="rgba(0, 0, 0, 0.5)"
+          transition="opacity 0.3s ease-in-out"
+          opacity="0"
+          pointerEvents="none"
+          _hover={{ opacity: 0.5 }}
+        />
+      </Box>
+
       <Box p={4}>
-        <Flex alignItems="center" mb={4}>
-          <Image
-            src={imageUrl || DEFAULT_LAUNCH_IMAGE}
-            alt={name}
-            borderRadius="full"
-            objectFit="cover"
-            w="50px"
-            h="50px"
-            mr={4}
-          />
-          <Heading size="md">{name}</Heading>
-          <Spacer />
+        <Flex alignItems="center" justifyContent="space-between" mb={2}>
+          <Heading size="sm">
+            {name}
+          </Heading>
           <IconButton
-            onClick={() => toggleFavorite(launch)} 
+            outline="none"
+            bg="transparent"
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent propagation to card click
+              toggleFavorite(launch); // Use the toggleFavorite prop
+            }}
             marginLeft={8}
             alignSelf="flex-start"
             alignContent="flex-start"
             justifyContent="flex-start"
           >
-            {isFavorite ? <FaBookmark /> : <FaRegBookmark />}
+            {launch.isFavorite ? <FaBookmark /> : <FaRegBookmark />}
           </IconButton>
         </Flex>
-        <Stack gap={2}>
-          <Text fontSize="sm">Date: {new Date(date).toLocaleDateString()}</Text>
-          <Text fontSize="sm">Location: {location}</Text>
-        </Stack>
+        <Text fontSize="xs" color="gray.300" mb={2}>
+          Date: {new Date(date_utc).toLocaleDateString()}
+        </Text>
         <Badge
-          mt={4}
           colorScheme={success === true ? "green" : success === false ? "red" : "yellow"}
           variant="solid"
-          fontSize="0.8em"
-          p="1"
+          fontSize="0.7em"
+          px={2}
+          py={1}
           borderRadius="md"
+          textTransform="capitalize"
         >
           {success === true ? "Success" : success === false ? "Failure" : "Pending"}
         </Badge>
+        {handleDetailsClick && <Text
+          mt={3}
+          fontSize="sm"
+          color="blue.300"
+          textAlign="right"
+          textDecoration="underline"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering card click
+            handleDetailsClick();
+          }}
+          cursor="pointer"
+        >
+          View Details
+        </Text>}
       </Box>
     </Box>
   );
