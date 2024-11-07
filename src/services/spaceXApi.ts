@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { ILaunch } from '../types';
+import { ILaunch, TweetsResponse } from '../types';
 import { API_HOST } from '../constants';
 
 export const spaceXApi = createApi({
@@ -12,10 +12,14 @@ export const spaceXApi = createApi({
     getPastLaunches: builder.query<ILaunch[], void>({
       query: () => 'api/launches/past',
     }),
+    getLaunchpadById: builder.query({
+      query: (id) => `api/launches/${id}`,
+    })
   }),
 });
 
 export const {
   useGetUpcomingLaunchesQuery,
   useGetPastLaunchesQuery,
+  useGetLaunchpadByIdQuery
 } = spaceXApi;
