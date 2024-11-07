@@ -7,7 +7,7 @@ import EmptyState from '../components/EmptyState/EmptyState';
 
 const Favorites: React.FC = () => {
   const [favorites, setFavorites] = useState<ILaunch[]>([]);
-  const { isFavorite, toggleFavorite } = useFavorites();
+  const { isFavorite } = useFavorites();
 
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
