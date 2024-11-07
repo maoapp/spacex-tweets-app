@@ -4,13 +4,16 @@ import { addFavorite, removeFavorite, selectFavorites } from '../slices/Favorite
 import { toaster } from '../components/ui/toaster';
 import { ILaunch } from '../types';
 
-export const useFavorites = (launch: ILaunch) => {
+export const useFavorites = () => {
   const dispatch = useDispatch();
   const favorites = useSelector((state: RootState) => selectFavorites(state));
-  const isFavorite = favorites.some(favorite => favorite.id === launch.id);
 
-  const toggleFavorite = () => {
-    if (isFavorite) {
+  const isFavorite = (launch: ILaunch) => {
+    return favorites.some(favorite => favorite.id === launch.id);
+  };
+
+  const toggleFavorite = (launch: ILaunch) => {
+    if (isFavorite(launch)) {
       dispatch(removeFavorite(launch.id));
 
       toaster.create({
