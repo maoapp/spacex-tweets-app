@@ -17,7 +17,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) => {
         onClick={onRetry}
         colorScheme="blue"
         variant="outline"
-        _hover={{ textDecoration: 'underline' }}
+        _hover={{ bg: 'none' }}
       >
         <Text fontWeight="bold" color="white">
           Try it again
