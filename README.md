@@ -40,6 +40,10 @@ For testing, React Testing Library and Jest were used to ensure component reliab
   - Filter upcoming cards by date
     (https://github.com/maoapp/spacex-tweets-app/pull/6)
 
+- **Unit tests: WIP**
+  - Add unit test config and some initial tests
+    (https://github.com/maoapp/spacex-tweets-app/pull/12)
+
 ## Development Tasks Completed
 The following tasks were completed during development:
 
