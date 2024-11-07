@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, Link as ChakraLink } from '@chakra-ui/react';
+import { Box, Flex, Heading } from '@chakra-ui/react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 const NavBar: React.FC = () => {
@@ -19,10 +19,8 @@ const NavBar: React.FC = () => {
 
         <Flex gap={6}>
           {navLinks.map((link) => (
-            <ChakraLink
+            <Box
               outline="none"
-              as={RouterLink}
-              to={link.path}
               key={link.path}
               fontSize="md"
               fontWeight="medium"
@@ -52,8 +50,8 @@ const NavBar: React.FC = () => {
                 },
               }}
             >
-              {link.name}
-            </ChakraLink>
+              <RouterLink to={link.path}>{link.name}</RouterLink>
+            </Box>
           ))}
         </Flex>
       </Flex>
